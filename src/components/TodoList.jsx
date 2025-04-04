@@ -7,7 +7,7 @@ export default function TodoList({ isDarkMode }) {
   const [editIndex, setEditIndex] = useState(null);
   const [newTitle, setNewTitle] = useState("");
 
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // Use the environment variable
+  const API_BASE_URL = `https://todo-backend-plkw.onrender.com/api/v1`; // Use the environment variable
 
   // Fetch the tasks from the backend when the component mounts
   useEffect(() => {
