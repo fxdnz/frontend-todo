@@ -7,6 +7,8 @@ export default function TodoList({ isDarkMode }) {
   const [editIndex, setEditIndex] = useState(null);
   const [newTitle, setNewTitle] = useState("");
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // Use the environment variable
+
   // Fetch the tasks from the backend when the component mounts
   useEffect(() => {
     fetchTasks();
@@ -15,7 +17,7 @@ export default function TodoList({ isDarkMode }) {
   // Fetch tasks from the backend
   const fetchTasks = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/tasks/");
+      const response = await fetch(`${API_BASE_URL}/tasks/`);
       const data = await response.json();
       console.log(data); // Log data to inspect if 'is_completed' is a boolean
 
@@ -40,16 +42,13 @@ export default function TodoList({ isDarkMode }) {
     };
 
     try {
-      const response = await fetch(
-        "http://127.0.0.1:8000/api/v1/tasks/create/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newTask),
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/tasks/create/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTask),
+      });
 
       if (response.ok) {
         const createdTask = await response.json();
@@ -77,16 +76,13 @@ export default function TodoList({ isDarkMode }) {
     };
 
     try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/v1/tasks/${id}/`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedTask),
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/tasks/${id}/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedTask),
+      });
 
       if (response.ok) {
         const updatedTaskData = await response.json();
@@ -107,12 +103,9 @@ export default function TodoList({ isDarkMode }) {
   // Remove a task from the backend and update the state
   const removeTask = async (id) => {
     try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/v1/tasks/${id}/`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/tasks/${id}/`, {
+        method: "DELETE",
+      });
 
       if (response.ok) {
         setTasks(tasks.filter((task) => task.id !== id));
@@ -131,16 +124,13 @@ export default function TodoList({ isDarkMode }) {
     };
 
     try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/v1/tasks/${id}/`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedTask),
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/tasks/${id}/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedTask),
+      });
 
       if (response.ok) {
         const updatedTaskData = await response.json();
